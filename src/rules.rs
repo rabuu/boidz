@@ -15,13 +15,49 @@ pub enum Rule {
 }
 
 impl Rule {
-    pub fn velocity_change(self, boid: &Boid, other_boids: &[Boid]) -> Vec2 {
+    pub fn velocity_change(self, boid: &Boid, all_boids: &[Boid]) -> Vec2 {
         use Rule::*;
 
         match self {
-            Cohesion => todo!(),
-            Separation => todo!(),
-            Alignment => todo!(),
+            Cohesion => cohesion(boid, all_boids),
+            Separation => separation(boid, all_boids),
+            Alignment => alignment(boid, all_boids),
         }
     }
+}
+
+fn cohesion(boid: &Boid, all_boids: &[Boid]) -> Vec2 {
+    let mut perceived_centre = Vec2::ZERO;
+
+    for b in all_boids.iter().filter(|b| *b != boid) {
+        perceived_centre += b.position;
+    }
+
+    perceived_centre /= (all_boids.len() - 1) as f32;
+
+    (perceived_centre - boid.position) / 100.0
+}
+
+fn separation(boid: &Boid, all_boids: &[Boid]) -> Vec2 {
+    let mut c = Vec2::ZERO;
+
+    for b in all_boids.iter().filter(|b| *b != boid) {
+        if (b.position - boid.position).length() < 100.0 {
+            c -= b.position - boid.position;
+        }
+    }
+
+    c
+}
+
+fn alignment(boid: &Boid, all_boids: &[Boid]) -> Vec2 {
+    let mut perceived_velocity = Vec2::ZERO;
+
+    for b in all_boids.iter().filter(|b| *b != boid) {
+        perceived_velocity += b.velocity;
+    }
+
+    perceived_velocity /= (all_boids.len() - 1) as f32;
+
+    (perceived_velocity - boid.velocity) / 8.0
 }

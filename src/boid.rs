@@ -21,11 +21,11 @@ impl Boid {
         }
     }
 
-    pub fn move_to_new_position(&mut self, other_boids: &[Boid]) {
+    pub fn move_to_new_position(&mut self, all_boids: &[Boid]) {
         let mut velocity_change = Vec2::ZERO;
 
         for rule in &self.rules {
-            velocity_change += rule.velocity_change(&self, other_boids);
+            velocity_change += rule.velocity_change(&self, all_boids);
         }
 
         self.velocity += velocity_change;
