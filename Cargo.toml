@@ -1,0 +1,12 @@
+[package]
+name = "boidz"
+version = "0.1.0"
+authors = ["rabuu <rabuu.dev@gmail.com>"]
+edition = "2021"
+description = "Implementation of Craig Reynold's boids algorithm"
+# license = "MIT"
+# license-file = "LICENSE"
+
+[dependencies]
+ggez = "0.7.0"
+glam = "0.20.5"
