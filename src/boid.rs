@@ -8,7 +8,7 @@ use crate::rules::Rule;
 pub struct Boid {
     pub position: Vec2,
     pub velocity: Vec2,
-    rules: HashSet<Rule>,
+    pub rules: HashSet<Rule>,
 }
 
 impl Boid {
