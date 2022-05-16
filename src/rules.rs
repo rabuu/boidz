@@ -27,23 +27,33 @@ impl Rule {
 }
 
 fn cohesion(boid: &Boid, all_boids: &[Boid]) -> Vec2 {
+    let local_flock = boid.local_flock(all_boids);
     let mut perceived_centre = Vec2::ZERO;
 
-    for b in all_boids.iter().filter(|b| *b != boid) {
-        perceived_centre += b.position;
+    if local_flock.is_empty() {
+        return perceived_centre;
     }
 
-    perceived_centre /= (all_boids.len() - 1) as f32;
+    for b in &local_flock {
+        perceived_centre += b.pos;
+    }
 
-    (perceived_centre - boid.position) / 100.0
+    perceived_centre /= local_flock.len() as f32;
+
+    (perceived_centre - boid.pos) / 100.0
 }
 
 fn separation(boid: &Boid, all_boids: &[Boid]) -> Vec2 {
+    let local_flock = boid.local_flock(all_boids);
     let mut c = Vec2::ZERO;
 
-    for b in all_boids.iter().filter(|b| *b != boid) {
-        if (b.position - boid.position).length() < 100.0 {
-            c -= b.position - boid.position;
+    if local_flock.is_empty() {
+        return c;
+    }
+
+    for b in &local_flock {
+        if (b.pos - boid.pos).length() < 100.0 {
+            c -= b.pos - boid.pos;
         }
     }
 
@@ -51,13 +61,18 @@ fn separation(boid: &Boid, all_boids: &[Boid]) -> Vec2 {
 }
 
 fn alignment(boid: &Boid, all_boids: &[Boid]) -> Vec2 {
+    let local_flock = boid.local_flock(all_boids);
     let mut perceived_velocity = Vec2::ZERO;
 
-    for b in all_boids.iter().filter(|b| *b != boid) {
-        perceived_velocity += b.velocity;
+    if local_flock.is_empty() {
+        return perceived_velocity;
     }
 
-    perceived_velocity /= (all_boids.len() - 1) as f32;
+    for b in &local_flock {
+        perceived_velocity += b.vel;
+    }
 
-    (perceived_velocity - boid.velocity) / 8.0
+    perceived_velocity /= local_flock.len() as f32;
+
+    (perceived_velocity - boid.vel) / 8.0
 }

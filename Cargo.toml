@@ -9,5 +9,5 @@ description = "Implementation of Craig Reynold's boids algorithm"
 
 [dependencies]
 ggez = "0.7.0"
-glam = "0.20.5"
+glam = { version = "0.20.5", features = ["rand"] }
 rand = "0.8.5"
