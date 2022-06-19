@@ -23,7 +23,13 @@ impl Simulation {
                 rand::random::<f32>() * area.1,
             );
 
-            let boid = Boid::new(pos, Vec2::ONE);
+            let boid = Boid::new(
+                pos,
+                Vec2::new(
+                    rand::random::<f32>() * 10. - 5.,
+                    rand::random::<f32>() * 10. - 5.,
+                ),
+            );
             boids.push(boid);
         }
 

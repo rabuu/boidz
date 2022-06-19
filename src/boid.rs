@@ -22,7 +22,7 @@ impl Boid {
             velocity_change += rule.velocity_change(self, all_boids);
         }
 
-        velocity_change /= 100.0;
+        velocity_change /= 75.0;
 
         self.vel += velocity_change;
         self.pos += self.vel;
@@ -32,7 +32,7 @@ impl Boid {
     }
 
     pub fn local_flock<'a>(&self, all_boids: &'a [Boid]) -> Vec<&'a Boid> {
-        const PERCEPTION: f32 = 100.0;
+        const PERCEPTION: f32 = 80.0;
 
         all_boids
             .iter()

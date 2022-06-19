@@ -40,7 +40,7 @@ fn cohesion(boid: &Boid, all_boids: &[Boid]) -> Vec2 {
 
     perceived_centre /= local_flock.len() as f32;
 
-    (perceived_centre - boid.pos) / 100.0
+    (perceived_centre - boid.pos) / 100.
 }
 
 fn separation(boid: &Boid, all_boids: &[Boid]) -> Vec2 {
@@ -52,12 +52,12 @@ fn separation(boid: &Boid, all_boids: &[Boid]) -> Vec2 {
     }
 
     for b in &local_flock {
-        if (b.pos - boid.pos).length() < 100.0 {
+        if b.pos.distance(boid.pos) < 20. {
             c -= b.pos - boid.pos;
         }
     }
 
-    c
+    c / 15.
 }
 
 fn alignment(boid: &Boid, all_boids: &[Boid]) -> Vec2 {
@@ -74,5 +74,5 @@ fn alignment(boid: &Boid, all_boids: &[Boid]) -> Vec2 {
 
     perceived_velocity /= local_flock.len() as f32;
 
-    (perceived_velocity - boid.vel) / 8.0
+    (perceived_velocity - boid.vel) / 5.
 }
