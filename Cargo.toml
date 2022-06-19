@@ -5,7 +5,6 @@ authors = ["rabuu <rabuu.dev@gmail.com>"]
 edition = "2021"
 description = "Implementation of Craig Reynold's boids algorithm"
 license = "MIT"
-license-file = "LICENSE"
 
 [dependencies]
 ggez = "0.7.0"
